@@ -9,13 +9,15 @@ import {
 } from "react";
 
 interface ModalContextValue {
-  open: (modalElement: ReactElement) => void;
+  open: (modalElement: ReactElement, closable?: boolean) => void;
   close: () => void;
+  backdropClosable: boolean;
 }
 
 const initialModalContext: ModalContextValue = {
   open: () => {},
   close: () => {},
+  backdropClosable: true,
 };
 
 const ModalContext = createContext<ModalContextValue>(initialModalContext);
@@ -24,10 +26,12 @@ export const useModalContext = () => useContext(ModalContext);
 
 export const ModalContextProvider = ({ children }: PropsWithChildren) => {
   const [modal, setModal] = useState<ReactElement | null>(null);
+  const [backdropClosable, setBackdropClosable] = useState<boolean>(true);
 
   const open: ModalContextValue["open"] = useCallback(
-    (modalElement: ReactElement) => {
+    (modalElement: ReactElement, closable = true) => {
       setModal(modalElement);
+      setBackdropClosable(closable);
     },
     [],
   );
@@ -37,8 +41,8 @@ export const ModalContextProvider = ({ children }: PropsWithChildren) => {
   }, []);
 
   const value: ModalContextValue = useMemo(
-    () => ({ open, close }),
-    [close, open],
+    () => ({ open, close, backdropClosable }),
+    [close, open, backdropClosable],
   );
 
   return (

@@ -2,6 +2,7 @@ import Page from "@/components/page";
 import Button from "@/components/button";
 import { useModalContext } from "@/context/modalContext";
 import LoginModal from "@/components/loginModal";
+import SignUpModal from "@/components/signUpModal";
 
 function HomePage() {
   const modal = useModalContext();
@@ -13,7 +14,12 @@ function HomePage() {
       </h1>
 
       <div className="flex flex-col gap-10 mx-auto">
-        <Button onClick={() => modal.open(<LoginModal />)}>Login Modal</Button>
+        <Button onClick={() => modal.open(<LoginModal />, false)}>
+          Login Modal
+        </Button>
+        <Button onClick={() => modal.open(<SignUpModal />)}>
+          Signup Modal
+        </Button>
       </div>
     </Page>
   );
