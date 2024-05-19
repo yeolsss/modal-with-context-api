@@ -1,5 +1,12 @@
+import HomePage from "@/pages/homePage/HomePage.tsx";
+import { ModalContextProvider } from "@/context/modalContext";
+
 function App() {
-  return <div>App</div>;
+  return (
+    <ModalContextProvider>
+      <HomePage />
+    </ModalContextProvider>
+  );
 }
 
 export default App;
